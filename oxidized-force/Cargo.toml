@@ -1,0 +1,19 @@
+[package]
+name = "oxidized-force"
+version = "0.1.0"
+authors = ["Nate Strandberg <nater540@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+thiserror = "1.0.23"
+serde_json = "1.0.61"
+reqwest = { version = "0.10.10", features = ["json"] }
+serde   = { version = "1.0.118", features = ["derive"] }
+chrono  = { version = "0.4.19", optional = true }
+
+[features]
+default = ["chrono"]
+
+[dev-dependencies]
+mockito = "0.28.0"
+tokio   = { version = "0.2", features = ["rt-threaded", "macros"] }
