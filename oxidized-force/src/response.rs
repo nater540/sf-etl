@@ -1,10 +1,8 @@
-use serde::{
-  //de::{Deserializer, DeserializeOwned},
-  Deserialize
-};
+use serde::{Serialize, Deserialize};
 
 /// Represents a successful query response.
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct QueryResponse<T> {
   pub total_size: i32,
   pub done:       bool,
@@ -19,7 +17,7 @@ pub struct TokenResponse {
   pub access_token: String,
   pub instance_url: String,
   pub signature:    String,
-  pub token_type:   Option<String>
+  pub token_type:   String
 }
 
 /// Represents a failed token request response.
@@ -30,8 +28,8 @@ pub struct TokenErrorResponse {
 }
 
 /// Represents the response from creating query jobs & fetching their statuses.
-#[serde(rename_all = "camelCase")]
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct BulkQueryStatusResponse {
   pub id:               String,
   pub operation:        String,
@@ -40,7 +38,7 @@ pub struct BulkQueryStatusResponse {
   pub state:            BulkState,
   pub concurrency_mode: String,
   pub content_type:     String,
-  pub api_version:      String,
+  pub api_version:      f32,
   pub line_ending:      String,
   pub column_delimiter: String
 }
@@ -57,15 +55,15 @@ pub enum BulkState {
 
 /// Represents a successful describe request response.
 /// See https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_responses_object_info.htm
-#[serde(rename_all = "camelCase")]
 #[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct DescribeResponse {
   pub name:   String,
   pub fields: Vec<Field>
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-#[derive(Deserialize, Debug, Clone)]
 pub struct Field {
   pub name:       String,
   pub length:     i32,
@@ -97,7 +95,7 @@ pub struct ErrorResponse {
 
 /// Represents all of the possible field types contained inside various responses.
 /// See https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/primitive_data_types.htm
-#[derive(Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum FieldType {
   Id,

@@ -18,24 +18,27 @@ use sql::*;
 #[derive(StructOpt, Debug)]
 #[structopt(name = "sf-sql", about = "Builds SQL for Salesforce objects")]
 struct Opts {
-  #[structopt(long, short = "c")]
+  /// Client Id
+  #[structopt(long, short = "c", env = "SF_CLIENT_ID", hide_env_values = true)]
   client_id: String,
 
   /// Keep it secret, keep it safe
-  #[structopt(long, short = "s")]
+  #[structopt(long, short = "s", env = "SF_CLIENT_SECRET", hide_env_values = true)]
   client_secret: String,
 
-  /// Salesforce login endpoint
-  #[structopt(long, short = "e", default_value = "https://login.salesforce.com")]
+  /// Login endpoint
+  #[structopt(long, short = "e", default_value = "https://login.salesforce.com", env = "SF_LOGIN_ENDPOINT")]
   login_endpoint: String,
 
-  #[structopt(long, short = "u")]
+  /// Username
+  #[structopt(long, short = "u", env = "SF_USERNAME", hide_env_values = true)]
   username: String,
 
-  #[structopt(long, short = "p")]
+  /// Password
+  #[structopt(long, short = "p", env = "SF_PASSWORD", hide_env_values = true)]
   password: String,
 
-  /// Salesforce SObject name
+  /// SObject name
   #[structopt(long, short)]
   name: String,
 
